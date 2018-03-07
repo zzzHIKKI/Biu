@@ -33,7 +33,7 @@ public class RpcDecoder extends ByteToMessageDecoder {
         Serializer serializer = SerializerFactory.load();
         //读取期望消息长度信息
         int length = byteBuf.readInt();
-        //实际信息长度小于小心期望长度信息
+        //实际信息长度小于期望长度信息
         if (byteBuf.readableBytes() < length) {
             throw new RuntimeException("Insufficient bytes to be read, expected: " + length);
         }
