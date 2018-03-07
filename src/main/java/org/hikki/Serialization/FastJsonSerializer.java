@@ -11,11 +11,11 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 public class FastJsonSerializer implements Serializer {
     public byte[] serialize(Object object) {
         byte[] bytes = JSON.toJSONBytes(object, SerializerFeature.SortField);
-        return new byte[0];
+        return new bytes;
     }
 
     public <T> T deserialize(byte[] bytes, Class<T> clazz) {
         T result = JSON.parseObject(bytes,clazz, Feature.SortFeidFastMatch);
-        retur result;
+        return result;
     }
 }
