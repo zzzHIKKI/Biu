@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+       <!-- 自动扫描-->
+       <context:component-scan base-package="org.hikki"/>
+       <!--读取相关属性！！！-->
+       <context:property-placeholder location="server.properties"/>
+       <!--ZooKeeper manager-->
+       <bean id="zk-manager" class="org.hikki.registry.zookeeper.ZooKeeperManager">
+              <constructor-arg name="zkAddress" value="${zookeeper.address}"/>
+       </bean>
+
+       <!-- RPC服务发现方-->
+       <bean id="discovery" class="org.hikki.registry.ServiceDiscovery">
+              <constructor-arg name="manager" ref="zk-manager"/>
+       </bean>
+       <!-- RPC客户端-->
+       <bean id="client" class="org.hikki.client.RpcClient">
+              <constructor-arg name="discovery" ref="discovery"/>
+       </bean>
+       <!--   RPCd动态代理-->
+       <bean id="proxy" class="org.hikki.client.proxy.RpcProxy">
+              <constructor-arg name="client" ref="client"/>
+       </bean>
+
+       <!-- RPC服务注册方-->
+       <bean id="registry" class="org.hikki.registry.ServiceRegistry">
+              <constructor-arg name="manager" ref="zk-manager"/>
+       </bean>
+
+       <!-- RPC服务端-->
+       <bean id="server" class="org.hikki.server.RpcServer">
+              <constructor-arg name="serverAddress" value="${server.address}"/>
+              <constructor-arg name="registry" ref="registry"/>
+       </bean>
+</beans>
