@@ -16,6 +16,6 @@ public class FastJsonSerializer implements Serializer {
 
     public <T> T deserialize(byte[] bytes, Class<T> clazz) {
         T result = JSON.parseObject(bytes,clazz, Feature.SortFeidFastMatch);
-        return null;
+        retur result;
     }
 }
