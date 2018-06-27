@@ -11,7 +11,7 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 public class FastJsonSerializer implements Serializer {
     public byte[] serialize(Object object) {
         byte[] bytes = JSON.toJSONBytes(object, SerializerFeature.SortField);
-        return new bytes;
+        return bytes;
     }
 
     public <T> T deserialize(byte[] bytes, Class<T> clazz) {
